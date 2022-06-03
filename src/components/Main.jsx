@@ -1,4 +1,4 @@
-import react from "react";
+import React from "react";
 import Constans from "expo-constants";
 import { Text, View } from "react-native";
 import RepositoryList from "./RepositoryList";
