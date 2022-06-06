@@ -1,44 +1,34 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import StyledText from "./StyledText";
+import RepositotyStats from "./RepositoryStats";
+import theme from "../theme";
 
-const parseThousands = value => { 
-  return value >= 1000
-  ? `${Math.round(value/100) / 10}k`
-  : String(value)
-}
+const RepositoryItemHeaders = ({
+  ownerAvatarUrl,
+  fullName,
+  description,
+  language,
+}) => (
+  <View style={{ flexDirection: "row", paddingBottom: 2 }}>
+    <View style={{ paddingRight: 10}}>
+    <Image style={styles.image} source={{ uri: ownerAvatarUrl }}></Image>
+      
+    </View>
 
-const RepositotyStats = (props) => (
-  <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-
-    <View>
-      <StyledText align='center' fontWeight='bold'>Stars</StyledText>
-      <StyledText align='center'>{parseThousands(props.stargazersCount)}</StyledText>
+    <View style={{ flex: 1}}>
+      <StyledText fontWeight="bold" fontSize="subheading">
+        {fullName}
+      </StyledText>
+      <StyledText>{description}</StyledText>
+      <StyledText style={styles.language}>{language}</StyledText>
     </View>
-    <View>
-      <StyledText align='center' fontWeight='bold'>Forks</StyledText>
-      <StyledText align='center'>{parseThousands(props.forksCount)}</StyledText>
-    </View>
-    <View>
-      <StyledText align='center' fontWeight='bold'>Review</StyledText>
-      <StyledText align='center'>{props.reviewCount}</StyledText>
-    </View>
-    <View>
-      <StyledText align='center' fontWeight='bold'>Rating</StyledText>
-      <StyledText align='center'>{props.ratingAverage}</StyledText>
-    </View>
- 
   </View>
 );
-
 const RepositoryItem = (props) => (
   <View key={props.id} style={styles.container}>
-    <StyledText fontWeight="bold" fontSize="subheading">
-      {props.fullName}
-    </StyledText>
-    <StyledText>{props.description}</StyledText>
-    <StyledText>{props.language}</StyledText>
-    <RepositotyStats {...props}/>
+    <RepositoryItemHeaders {...props} />
+    <RepositotyStats {...props} />
   </View>
 );
 const styles = StyleSheet.create({
@@ -46,6 +36,19 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 5,
     paddingTop: 5,
+  },
+  language: {
+    padding: 4,
+    color: theme.colors.white,
+    backgroundColor: theme.colors.primary,
+    alignSelf: "flex-start",
+    borderRadius: 4,
+    overflow: "hidden",
+  },
+  image: {
+    width: 48,
+    height: 48,
+    borderRadius: 4,
   },
 });
 export default RepositoryItem;
